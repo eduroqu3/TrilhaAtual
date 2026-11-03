@@ -39,7 +39,7 @@ export function parseBatch(text: string): { full_name: string; email: string }[]
     .filter(Boolean)
     .map((l) => {
       const [name, email] = l.split(/[;,\t]/).map((s) => s?.trim() ?? "");
-      return { full_name: name, email: (email ?? "").toLowerCase() };
+      return { full_name: name ?? "", email: (email ?? "").toLowerCase() };
     })
     .filter((r) => r.full_name && /.+@.+\..+/.test(r.email));
 }

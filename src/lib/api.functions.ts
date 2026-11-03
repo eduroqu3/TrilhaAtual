@@ -428,7 +428,7 @@ export const evaluationForm = createServerFn({ method: "GET" })
   .handler(async ({ data, context }) => {
     const c = await need(context as Ctx, "aluno");
     const s = await studentContext(context.userId, c.profile.school_id);
-    const teacher = s.teachers.find((t) => t.id === data.teacherId);
+    const teacher = s.teachers.find((t: { id: string }) => t.id === data.teacherId);
     if (!s.cycle || !teacher) throw new Error("Avaliação indisponível.");
     const db = await admin();
     const { data: qs } = await db.from("questions").select("id, text").eq("cycle_id", s.cycle.id).order("position");
@@ -441,7 +441,7 @@ export const submitEvaluation = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     const c = await need(context as Ctx, "aluno");
     const s = await studentContext(context.userId, c.profile.school_id);
-    const teacher = s.teachers.find((t) => t.id === data.teacherId);
+    const teacher = s.teachers.find((t: { id: string }) => t.id === data.teacherId);
     if (!s.cycle || !teacher) throw new Error("Avaliação indisponível.");
     if (teacher.done) throw new Error("Você já avaliou este professor neste ciclo.");
     const db = await admin();
