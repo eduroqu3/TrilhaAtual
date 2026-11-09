@@ -1,7 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState, type FormEvent } from "react";
 import { ArrowLeft, ArrowRight, Check } from "lucide-react";
-import { Logo } from "./index";
+import { Logo } from "@/components/Logo";
 
 export const Route = createFileRoute("/entrar")({
   head: () => ({
