@@ -15,7 +15,8 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: "Trilha — Escuta que vira caminho" },
       {
         property: "og:description",
-        content: "Avaliações de estudantes como ponto de partida para escuta e melhoria pedagógica — não vereditos.",
+        content:
+          "Avaliações de estudantes como ponto de partida para escuta e melhoria pedagógica — não vereditos.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -35,13 +36,24 @@ function Eyebrow({ children, light = false }: { children: ReactNode; light?: boo
   );
 }
 
-function PrimaryButton({ children, href, variant = "solid" }: { children: ReactNode; href: string; variant?: "solid" | "cream" }) {
+function PrimaryButton({
+  children,
+  href,
+  variant = "solid",
+}: {
+  children: ReactNode;
+  href: string;
+  variant?: "solid" | "cream";
+}) {
   const cls =
     variant === "solid"
       ? "bg-primary text-primary-foreground hover:bg-foreground"
       : "bg-background text-primary hover:bg-accent";
   return (
-    <a href={href} className={`group inline-flex items-center gap-2 rounded-md px-5 py-3 text-sm font-bold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mustard ${cls}`}>
+    <a
+      href={href}
+      className={`group inline-flex items-center gap-2 rounded-md px-5 py-3 text-sm font-bold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mustard ${cls}`}
+    >
       {children}
       <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
     </a>
@@ -50,7 +62,10 @@ function PrimaryButton({ children, href, variant = "solid" }: { children: ReactN
 
 function TextLink({ children, href }: { children: ReactNode; href: string }) {
   return (
-    <a href={href} className="group inline-flex items-center gap-2 text-sm font-bold text-primary underline-offset-4 hover:underline">
+    <a
+      href={href}
+      className="group inline-flex items-center gap-2 text-sm font-bold text-primary underline-offset-4 hover:underline"
+    >
       {children}
       <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
     </a>
@@ -62,15 +77,26 @@ function Header() {
     <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur">
       <div className={`${wrap} flex h-20 items-center justify-between gap-6`}>
         <a href="#inicio" className="flex items-center gap-3">
-          <Logo />
+          <Logo className="h-11 md:h-12" />
         </a>
         <nav className="hidden items-center gap-8 text-sm font-medium text-foreground lg:flex">
-          <a href="#estudantes" className="hover:text-primary">Para estudantes</a>
-          <a href="#perfis" className="hover:text-primary">Perfis docentes</a>
-          <a href="#escolas" className="hover:text-primary">Para escolas</a>
-          <a href="#duvidas" className="hover:text-primary">Dúvidas</a>
+          <a href="#estudantes" className="hover:text-primary">
+            Para estudantes
+          </a>
+          <a href="#perfis" className="hover:text-primary">
+            Perfis docentes
+          </a>
+          <a href="#escolas" className="hover:text-primary">
+            Para escolas
+          </a>
+          <a href="#duvidas" className="hover:text-primary">
+            Dúvidas
+          </a>
         </nav>
-        <Link to="/entrar" className="group inline-flex items-center gap-2 rounded-md bg-primary px-5 py-3 text-sm font-bold text-primary-foreground transition-colors hover:bg-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mustard">
+        <Link
+          to="/entrar"
+          className="group inline-flex items-center gap-2 rounded-md bg-primary px-5 py-3 text-sm font-bold text-primary-foreground transition-colors hover:bg-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mustard"
+        >
           Entrar
           <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
         </Link>
@@ -81,14 +107,18 @@ function Header() {
 
 function Hero() {
   return (
-    <section id="inicio" className={`${wrap} grid items-center gap-16 py-20 md:py-28 lg:grid-cols-[1.1fr_1fr]`}>
+    <section
+      id="inicio"
+      className={`${wrap} grid items-center gap-16 py-20 md:py-28 lg:grid-cols-[1.1fr_1fr]`}
+    >
       <div>
         <Eyebrow>Escuta que vira caminho</Eyebrow>
         <h1 className="mt-6 max-w-xl text-5xl leading-[1.02] font-medium text-foreground md:text-7xl">
           Sua experiência pode <em className="text-primary">melhorar</em> a próxima aula.
         </h1>
         <p className="mt-7 max-w-lg text-lg leading-relaxed text-muted-foreground">
-          Um espaço para estudantes compartilharem como aprendem — e para escolas transformarem essas percepções em conversas e melhorias pedagógicas.
+          Um espaço para estudantes compartilharem como aprendem — e para escolas transformarem
+          essas percepções em conversas e melhorias pedagógicas.
         </p>
         <div className="mt-9 flex flex-wrap items-center gap-6">
           <PrimaryButton href="#estudantes">Entenda a proposta</PrimaryButton>
@@ -102,14 +132,23 @@ function Hero() {
       <figure className="relative mx-auto w-full max-w-md">
         <div className="relative aspect-square">
           <div className="absolute inset-4 rounded-full bg-accent" />
-          <svg className="absolute -left-4 top-6 h-24 w-24 text-mustard" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="1.5">
-            <path d="M10 70 Q40 10 90 30" /><path d="M20 85 Q50 40 85 55" />
+          <svg
+            className="absolute -left-4 top-6 h-24 w-24 text-mustard"
+            viewBox="0 0 100 100"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
+          >
+            <path d="M10 70 Q40 10 90 30" />
+            <path d="M20 85 Q50 40 85 55" />
           </svg>
           <div className="absolute left-1/2 top-1/2 w-[62%] -translate-x-1/2 -translate-y-1/2 -rotate-3 rounded-lg border border-border bg-card p-6 shadow-duo">
             <div className="mx-auto -mt-9 mb-4 h-5 w-16 rounded-sm bg-sage" />
             {[80, 60, 72, 50].map((w, i) => (
               <div key={i} className="mb-4 flex items-center gap-3">
-                <span className={`flex h-4 w-4 items-center justify-center rounded-sm border border-primary ${i === 1 ? "bg-primary" : ""}`}>
+                <span
+                  className={`flex h-4 w-4 items-center justify-center rounded-sm border border-primary ${i === 1 ? "bg-primary" : ""}`}
+                >
                   {i === 1 && <Check className="h-3 w-3 text-primary-foreground" />}
                 </span>
                 <span className="h-1.5 rounded-full bg-primary/40" style={{ width: `${w}%` }} />
@@ -123,7 +162,9 @@ function Hero() {
             <p className="mt-1 font-serif text-xl italic text-foreground">Ouvir também ensina.</p>
           </div>
         </div>
-        <figcaption className="mt-8 text-center text-sm text-muted-foreground">Cada percurso de aprendizagem é feito de muitas vozes.</figcaption>
+        <figcaption className="mt-8 text-center text-sm text-muted-foreground">
+          Cada percurso de aprendizagem é feito de muitas vozes.
+        </figcaption>
       </figure>
     </section>
   );
@@ -134,7 +175,9 @@ function Banner() {
     <section className="bg-primary py-10 text-primary-foreground">
       <div className={`${wrap} flex items-center justify-center gap-5 text-center`}>
         <span className="hidden text-mustard md:inline">✦</span>
-        <p className="font-serif text-xl md:text-3xl">Uma avaliação não resume uma aula. O contexto faz parte da conversa.</p>
+        <p className="font-serif text-xl md:text-3xl">
+          Uma avaliação não resume uma aula. O contexto faz parte da conversa.
+        </p>
         <span className="hidden text-mustard md:inline">✦</span>
       </div>
     </section>
@@ -149,7 +192,9 @@ function NumberedList({ items }: { items: { t?: string; d: string }[] }) {
           <span className="font-serif text-2xl text-primary">{String(i + 1).padStart(2, "0")}</span>
           <div>
             {it.t && <h3 className="text-xl font-medium text-foreground">{it.t}</h3>}
-            <p className={`${it.t ? "mt-1.5" : ""} leading-relaxed text-muted-foreground`}>{it.d}</p>
+            <p className={`${it.t ? "mt-1.5" : ""} leading-relaxed text-muted-foreground`}>
+              {it.d}
+            </p>
           </div>
         </li>
       ))}
@@ -168,15 +213,27 @@ function Students() {
       <div className={`${wrap} grid items-center gap-16 lg:grid-cols-2`}>
         <div>
           <Eyebrow>A experiência começa com você</Eyebrow>
-          <h2 className="mt-6 text-4xl leading-tight font-medium md:text-5xl">O que acontece na aula merece ser escutado.</h2>
+          <h2 className="mt-6 text-4xl leading-tight font-medium md:text-5xl">
+            O que acontece na aula merece ser escutado.
+          </h2>
           <p className="mt-6 max-w-lg leading-relaxed text-muted-foreground">
-            Suas observações ajudam a compor uma visão mais ampla do ensino. O valor está no que se aprende ao olhar para diferentes experiências — não em reduzir uma pessoa a uma nota.
+            Suas observações ajudam a compor uma visão mais ampla do ensino. O valor está no que se
+            aprende ao olhar para diferentes experiências — não em reduzir uma pessoa a uma nota.
           </p>
           <NumberedList
             items={[
-              { t: "Compartilhe sua perspectiva", d: "Conte como foi aprender: o que ajudou, o que poderia mudar e em qual contexto." },
-              { t: "Acrescente contexto", d: "Uma percepção ganha sentido quando sabemos a que aspecto da experiência ela se refere." },
-              { t: "Ajude a abrir caminhos", d: "O conjunto das avaliações pode apoiar conversas pedagógicas e melhorias na escola." },
+              {
+                t: "Compartilhe sua perspectiva",
+                d: "Conte como foi aprender: o que ajudou, o que poderia mudar e em qual contexto.",
+              },
+              {
+                t: "Acrescente contexto",
+                d: "Uma percepção ganha sentido quando sabemos a que aspecto da experiência ela se refere.",
+              },
+              {
+                t: "Ajude a abrir caminhos",
+                d: "O conjunto das avaliações pode apoiar conversas pedagógicas e melhorias na escola.",
+              },
             ]}
           />
         </div>
@@ -185,7 +242,9 @@ function Students() {
           <article className="relative rounded-lg border border-border bg-card p-8 shadow-sage">
             <div className="flex items-start justify-between gap-4">
               <div className="flex items-center gap-4">
-                <span className="flex h-14 w-14 items-center justify-center rounded-full bg-accent font-serif text-lg text-primary">LM</span>
+                <span className="flex h-14 w-14 items-center justify-center rounded-full bg-accent font-serif text-lg text-primary">
+                  LM
+                </span>
                 <div>
                   <h3 className="text-xl font-medium">Luiza Martins</h3>
                   <p className="text-sm text-muted-foreground">Ciências · Ensino Fundamental</p>
@@ -196,20 +255,31 @@ function Students() {
               <span className="font-serif text-6xl leading-none text-foreground">4,2</span>
               <div>
                 <div className="flex gap-0.5 text-mustard">
-                  {[0, 1, 2, 3].map((i) => <Star key={i} className="h-4 w-4 fill-current" />)}
+                  {[0, 1, 2, 3].map((i) => (
+                    <Star key={i} className="h-4 w-4 fill-current" />
+                  ))}
                   <Star className="h-4 w-4" />
                 </div>
                 <p className="mt-1 font-serif italic text-foreground">Uma leitura entre várias</p>
               </div>
             </div>
             <p className="mt-5 rounded-md bg-secondary p-4 text-sm leading-relaxed text-muted-foreground">
-              Uma nota oferece apenas um recorte. Conhecer o contexto e as diferentes dimensões ajuda a formar uma leitura mais cuidadosa.
+              Uma nota oferece apenas um recorte. Conhecer o contexto e as diferentes dimensões
+              ajuda a formar uma leitura mais cuidadosa.
             </p>
             <ul className="mt-6 space-y-4">
               {dims.map(([l, v]) => (
                 <li key={l}>
-                  <div className="flex justify-between text-sm"><span>{l}</span><span className="font-bold">{v.toFixed(1).replace(".", ",")}</span></div>
-                  <div className="mt-1.5 h-1.5 rounded-full bg-accent"><div className="h-full rounded-full bg-primary" style={{ width: `${(v / 5) * 100}%` }} /></div>
+                  <div className="flex justify-between text-sm">
+                    <span>{l}</span>
+                    <span className="font-bold">{v.toFixed(1).replace(".", ",")}</span>
+                  </div>
+                  <div className="mt-1.5 h-1.5 rounded-full bg-accent">
+                    <div
+                      className="h-full rounded-full bg-primary"
+                      style={{ width: `${(v / 5) * 100}%` }}
+                    />
+                  </div>
                 </li>
               ))}
             </ul>
@@ -222,23 +292,41 @@ function Students() {
 
 function Profiles() {
   return (
-    <section id="perfis" className={`${wrap} grid items-center gap-16 py-24 md:py-32 lg:grid-cols-2`}>
+    <section
+      id="perfis"
+      className={`${wrap} grid items-center gap-16 py-24 md:py-32 lg:grid-cols-2`}
+    >
       <div className="rounded-xl bg-accent p-6 md:p-10">
         <div className="rounded-lg border border-border bg-card p-6 shadow-mustard">
           <div className="flex items-center justify-between">
-            <Logo variant="simbolo" className="h-10" />
+            <Logo variant="simbolo" className="h-12 md:h-14" />
             <span className="eyebrow text-[0.6rem]">Explorar perfis</span>
           </div>
           <form className="mt-6 flex gap-2" onSubmit={(e) => e.preventDefault()}>
-            <label className="sr-only" htmlFor="busca">Buscar perfis</label>
-            <input id="busca" placeholder="Busque por disciplina ou nome" className="min-w-0 flex-1 rounded-md border border-input bg-background px-4 py-3 text-sm outline-none focus:border-primary" />
-            <button aria-label="Buscar" className="rounded-md bg-primary px-4 text-primary-foreground"><Search className="h-4 w-4" /></button>
+            <label className="sr-only" htmlFor="busca">
+              Buscar perfis
+            </label>
+            <input
+              id="busca"
+              placeholder="Busque por disciplina ou nome"
+              className="min-w-0 flex-1 rounded-md border border-input bg-background px-4 py-3 text-sm outline-none focus:border-primary"
+            />
+            <button
+              aria-label="Buscar"
+              className="rounded-md bg-primary px-4 text-primary-foreground"
+            >
+              <Search className="h-4 w-4" />
+            </button>
           </form>
           <div className="mt-6 flex items-center gap-4 rounded-md border border-border p-4">
-            <span className="flex h-10 w-10 items-center justify-center rounded-full bg-accent font-serif text-primary">?</span>
+            <span className="flex h-10 w-10 items-center justify-center rounded-full bg-accent font-serif text-primary">
+              ?
+            </span>
             <div className="flex-1">
               <p className="font-serif text-lg">Uma consulta com contexto</p>
-              <p className="text-sm text-muted-foreground">Perfis públicos para conhecer experiências</p>
+              <p className="text-sm text-muted-foreground">
+                Perfis públicos para conhecer experiências
+              </p>
             </div>
             <ArrowRight className="h-4 w-4 text-primary" />
           </div>
@@ -246,9 +334,13 @@ function Profiles() {
       </div>
       <div>
         <Eyebrow>Além da primeira impressão</Eyebrow>
-        <h2 className="mt-6 text-4xl leading-tight font-medium md:text-5xl">Perfis públicos para conhecer, não para rotular.</h2>
+        <h2 className="mt-6 text-4xl leading-tight font-medium md:text-5xl">
+          Perfis públicos para conhecer, não para rotular.
+        </h2>
         <p className="mt-6 leading-relaxed text-muted-foreground">
-          Os perfis docentes apresentam avaliações como parte de uma conversa maior sobre a experiência de aprender. Consulte as dimensões e considere que toda pontuação mostra só um recorte.
+          Os perfis docentes apresentam avaliações como parte de uma conversa maior sobre a
+          experiência de aprender. Consulte as dimensões e considere que toda pontuação mostra só um
+          recorte.
         </p>
         <ul className="mt-8 space-y-4">
           {[
@@ -257,12 +349,16 @@ function Profiles() {
             "Reconheça que contextos e experiências podem ser diferentes.",
           ].map((t) => (
             <li key={t} className="flex items-start gap-4">
-              <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-accent"><ArrowRight className="h-3.5 w-3.5 text-primary" /></span>
+              <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-accent">
+                <ArrowRight className="h-3.5 w-3.5 text-primary" />
+              </span>
               <span>{t}</span>
             </li>
           ))}
         </ul>
-        <div className="mt-8"><TextLink href="#duvidas">Por que contexto importa?</TextLink></div>
+        <div className="mt-8">
+          <TextLink href="#duvidas">Por que contexto importa?</TextLink>
+        </div>
       </div>
     </section>
   );
@@ -277,8 +373,13 @@ function QuoteSection() {
           <p className="eyebrow mt-5 text-accent">Uma ideia para levar com você</p>
         </div>
         <blockquote>
-          <p className="font-serif text-3xl leading-snug md:text-5xl">“Uma nota é uma pergunta para aprofundar — não uma resposta definitiva sobre quem ensina.”</p>
-          <footer className="mt-6 text-sm text-primary-foreground/70">Princípio de leitura da Trilha.</footer>
+          <p className="font-serif text-3xl leading-snug md:text-5xl">
+            “Uma nota é uma pergunta para aprofundar — não uma resposta definitiva sobre quem
+            ensina.”
+          </p>
+          <footer className="mt-6 text-sm text-primary-foreground/70">
+            Princípio de leitura da Trilha.
+          </footer>
         </blockquote>
       </div>
     </section>
@@ -291,9 +392,13 @@ function Schools() {
       <div className={`${wrap} grid items-center gap-16 lg:grid-cols-2`}>
         <div>
           <Eyebrow>Uma escuta que volta para a escola</Eyebrow>
-          <h2 className="mt-6 text-4xl leading-tight font-medium md:text-5xl">Avaliar também é aprender a melhorar.</h2>
+          <h2 className="mt-6 text-4xl leading-tight font-medium md:text-5xl">
+            Avaliar também é aprender a melhorar.
+          </h2>
           <p className="mt-6 leading-relaxed text-muted-foreground">
-            Para escolas, as avaliações podem contribuir com a avaliação interna e apoiar reflexões pedagógicas. A intenção é olhar para padrões e possibilidades de desenvolvimento, com responsabilidade e espaço para contexto.
+            Para escolas, as avaliações podem contribuir com a avaliação interna e apoiar reflexões
+            pedagógicas. A intenção é olhar para padrões e possibilidades de desenvolvimento, com
+            responsabilidade e espaço para contexto.
           </p>
           <NumberedList
             items={[
@@ -312,7 +417,9 @@ function Schools() {
             </div>
           ))}
           <div className="mt-8 flex h-24 items-end gap-3 border-b border-border">
-            {[40, 65, 50, 85, 70, 95].map((h, i) => <div key={i} className="flex-1 rounded-t-sm bg-sage" style={{ height: `${h}%` }} />)}
+            {[40, 65, 50, 85, 70, 95].map((h, i) => (
+              <div key={i} className="flex-1 rounded-t-sm bg-sage" style={{ height: `${h}%` }} />
+            ))}
           </div>
         </div>
       </div>
@@ -322,9 +429,18 @@ function Schools() {
 
 function Process() {
   const steps = [
-    ["Experiência", "Estudantes compartilham suas percepções sobre as aulas e o processo de aprendizagem."],
-    ["Leitura", "As avaliações são consideradas em conjunto, com atenção ao contexto de cada experiência."],
-    ["Melhoria", "Escolas podem usar esse insumo em sua avaliação interna e em conversas pedagógicas."],
+    [
+      "Experiência",
+      "Estudantes compartilham suas percepções sobre as aulas e o processo de aprendizagem.",
+    ],
+    [
+      "Leitura",
+      "As avaliações são consideradas em conjunto, com atenção ao contexto de cada experiência.",
+    ],
+    [
+      "Melhoria",
+      "Escolas podem usar esse insumo em sua avaliação interna e em conversas pedagógicas.",
+    ],
   ];
   return (
     <section id="percurso" className={`${wrap} py-24 md:py-32`}>
@@ -333,7 +449,9 @@ function Process() {
           <Eyebrow>Um percurso em três tempos</Eyebrow>
           <h2 className="mt-6 text-4xl font-medium md:text-6xl">Escutar. Refletir. Aprimorar.</h2>
         </div>
-        <p className="max-w-xs text-muted-foreground">Um ciclo para manter a experiência dos estudantes próxima das decisões pedagógicas.</p>
+        <p className="max-w-xs text-muted-foreground">
+          Um ciclo para manter a experiência dos estudantes próxima das decisões pedagógicas.
+        </p>
       </div>
       <div className="relative mt-16">
         <div className="absolute left-0 right-0 top-0 hidden h-px bg-border md:block" />
@@ -353,10 +471,22 @@ function Process() {
 }
 
 const faqs = [
-  ["Uma nota define se um professor é bom?", "Não. Uma nota é apenas um recorte de algumas experiências. Ela serve como ponto de partida para entender o que acontece em aula, nunca como um julgamento completo sobre quem ensina."],
-  ["Para que servem as avaliações dos estudantes?", "Para trazer a perspectiva de quem aprende para perto das conversas pedagógicas, ajudando escolas e docentes a perceber o que funciona e onde há espaço para evoluir."],
-  ["O que encontro em um perfil docente?", "Informações sobre disciplina e etapa de ensino, uma leitura agregada das avaliações e dimensões específicas da experiência, sempre acompanhadas de lembretes sobre contexto."],
-  ["Como a Trilha trata as avaliações?", "Como sinais para iniciar conversas. Elas são lidas em conjunto, com atenção ao contexto, e sem linguagem de ranking ou exposição."],
+  [
+    "Uma nota define se um professor é bom?",
+    "Não. Uma nota é apenas um recorte de algumas experiências. Ela serve como ponto de partida para entender o que acontece em aula, nunca como um julgamento completo sobre quem ensina.",
+  ],
+  [
+    "Para que servem as avaliações dos estudantes?",
+    "Para trazer a perspectiva de quem aprende para perto das conversas pedagógicas, ajudando escolas e docentes a perceber o que funciona e onde há espaço para evoluir.",
+  ],
+  [
+    "O que encontro em um perfil docente?",
+    "Informações sobre disciplina e etapa de ensino, uma leitura agregada das avaliações e dimensões específicas da experiência, sempre acompanhadas de lembretes sobre contexto.",
+  ],
+  [
+    "Como a Trilha trata as avaliações?",
+    "Como sinais para iniciar conversas. Elas são lidas em conjunto, com atenção ao contexto, e sem linguagem de ranking ou exposição.",
+  ],
 ];
 
 function FAQ() {
@@ -367,7 +497,9 @@ function FAQ() {
         <div>
           <Eyebrow>Dúvidas honestas</Eyebrow>
           <h2 className="mt-6 text-4xl font-medium md:text-5xl">Antes de seguir o caminho.</h2>
-          <p className="mt-5 text-muted-foreground">Uma ferramenta de avaliação precisa ser compreendida com cuidado.</p>
+          <p className="mt-5 text-muted-foreground">
+            Uma ferramenta de avaliação precisa ser compreendida com cuidado.
+          </p>
         </div>
         <ul className="border-t border-border">
           {faqs.map(([q, a], i) => (
@@ -378,9 +510,15 @@ function FAQ() {
                 className="flex w-full items-center justify-between gap-6 py-6 text-left font-serif text-xl text-foreground hover:text-primary"
               >
                 {q}
-                {open === i ? <Minus className="h-5 w-5 shrink-0 text-primary" /> : <Plus className="h-5 w-5 shrink-0 text-primary" />}
+                {open === i ? (
+                  <Minus className="h-5 w-5 shrink-0 text-primary" />
+                ) : (
+                  <Plus className="h-5 w-5 shrink-0 text-primary" />
+                )}
               </button>
-              {open === i && <p className="max-w-xl pb-6 leading-relaxed text-muted-foreground">{a}</p>}
+              {open === i && (
+                <p className="max-w-xl pb-6 leading-relaxed text-muted-foreground">{a}</p>
+              )}
             </li>
           ))}
         </ul>
@@ -396,8 +534,14 @@ function FinalCTA() {
       <div className="absolute -right-16 -top-16 h-[20rem] w-[20rem] rounded-full border border-primary-foreground/15" />
       <div className={`${wrap} relative`}>
         <Eyebrow light>O próximo passo começa ouvindo</Eyebrow>
-        <h2 className="mt-6 max-w-3xl text-4xl leading-tight font-medium md:text-6xl">Mais escuta pode abrir espaço para uma aula melhor.</h2>
-        <div className="mt-10"><PrimaryButton href="#inicio" variant="cream">Voltar ao início</PrimaryButton></div>
+        <h2 className="mt-6 max-w-3xl text-4xl leading-tight font-medium md:text-6xl">
+          Mais escuta pode abrir espaço para uma aula melhor.
+        </h2>
+        <div className="mt-10">
+          <PrimaryButton href="#inicio" variant="cream">
+            Voltar ao início
+          </PrimaryButton>
+        </div>
       </div>
     </section>
   );
@@ -407,8 +551,12 @@ function Footer() {
   return (
     <footer className="bg-forest py-12 text-primary-foreground">
       <div className={`${wrap} flex flex-col gap-6 md:flex-row md:items-center md:justify-between`}>
-        <span className="inline-flex w-fit rounded-md bg-background px-4 py-3"><Logo variant="texto" className="h-8" /></span>
-        <p className="font-serif italic text-accent">Escuta respeitosa. Aprendizagem em movimento.</p>
+        <span className="inline-flex w-fit rounded-md bg-background px-4 py-3">
+          <Logo variant="texto" className="h-9 md:h-10" />
+        </span>
+        <p className="font-serif italic text-accent">
+          Escuta respeitosa. Aprendizagem em movimento.
+        </p>
       </div>
     </footer>
   );

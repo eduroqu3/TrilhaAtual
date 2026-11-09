@@ -117,9 +117,20 @@
 }
 
 @layer base {
-  body { font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
-  h1, h2, h3, h4 { font-family: var(--font-serif); letter-spacing: -0.02em; }
-  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-serif);
+    letter-spacing: -0.02em;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 @utility eyebrow {
@@ -130,6 +141,14 @@
   text-transform: uppercase;
   color: var(--primary);
 }
-@utility shadow-sage { box-shadow: 14px 14px 0 0 var(--accent); }
-@utility shadow-mustard { box-shadow: 12px 12px 0 0 var(--mustard); }
-@utility shadow-duo { box-shadow: 10px 10px 0 0 var(--primary), 18px 18px 0 0 var(--mustard); }
+@utility shadow-sage {
+  box-shadow: 14px 14px 0 0 var(--accent);
+}
+@utility shadow-mustard {
+  box-shadow: 12px 12px 0 0 var(--mustard);
+}
+@utility shadow-duo {
+  box-shadow:
+    10px 10px 0 0 var(--primary),
+    18px 18px 0 0 var(--mustard);
+}
