@@ -1,4 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { Logo } from "@/components/Logo";
 import { useState, type ReactNode } from "react";
 import { ArrowRight, Check, Plus, Minus, Search, Star, Quote } from "lucide-react";
 
@@ -24,22 +25,6 @@ export const Route = createFileRoute("/")({
 });
 
 const wrap = "mx-auto w-full max-w-6xl px-6 md:px-10";
-
-function Logo({ light = false }: { light?: boolean }) {
-  return (
-    <span className="flex items-center gap-2.5">
-      <span
-        className={`flex h-8 w-8 items-center justify-center rounded-full border ${light ? "border-primary-foreground/60" : "border-primary"}`}
-      >
-        <svg viewBox="0 0 20 20" className={`h-4 w-4 ${light ? "text-mustard" : "text-primary"}`} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
-          <path d="M4 15c3-1 4-4 6-7s3-4 6-4" />
-          <circle cx="16" cy="4" r="1.2" fill="currentColor" />
-        </svg>
-      </span>
-      <span className={`font-serif text-2xl font-medium ${light ? "text-primary-foreground" : "text-foreground"}`}>trilha</span>
-    </span>
-  );
-}
 
 function Eyebrow({ children, light = false }: { children: ReactNode; light?: boolean }) {
   return (
@@ -78,7 +63,6 @@ function Header() {
       <div className={`${wrap} flex h-20 items-center justify-between gap-6`}>
         <a href="#inicio" className="flex items-center gap-3">
           <Logo />
-          <span className="hidden text-[0.6rem] font-bold uppercase tracking-[0.18em] text-muted-foreground sm:inline">Nome de trabalho</span>
         </a>
         <nav className="hidden items-center gap-8 text-sm font-medium text-foreground lg:flex">
           <a href="#estudantes" className="hover:text-primary">Para estudantes</a>
@@ -86,7 +70,10 @@ function Header() {
           <a href="#escolas" className="hover:text-primary">Para escolas</a>
           <a href="#duvidas" className="hover:text-primary">Dúvidas</a>
         </nav>
-        <PrimaryButton href="#percurso">Como funciona</PrimaryButton>
+        <Link to="/entrar" className="group inline-flex items-center gap-2 rounded-md bg-primary px-5 py-3 text-sm font-bold text-primary-foreground transition-colors hover:bg-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mustard">
+          Entrar
+          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+        </Link>
       </div>
     </header>
   );
@@ -204,7 +191,6 @@ function Students() {
                   <p className="text-sm text-muted-foreground">Ciências · Ensino Fundamental</p>
                 </div>
               </div>
-              <span className="rounded-full border border-mustard px-3 py-1 text-[0.6rem] font-bold tracking-widest text-foreground">EXEMPLO ILUSTRATIVO</span>
             </div>
             <div className="mt-8 flex items-end gap-5 border-y border-border py-6">
               <span className="font-serif text-6xl leading-none text-foreground">4,2</span>
@@ -214,7 +200,6 @@ function Students() {
                   <Star className="h-4 w-4" />
                 </div>
                 <p className="mt-1 font-serif italic text-foreground">Uma leitura entre várias</p>
-                <p className="text-xs text-muted-foreground">Exemplo de nota agregada</p>
               </div>
             </div>
             <p className="mt-5 rounded-md bg-secondary p-4 text-sm leading-relaxed text-muted-foreground">
@@ -228,9 +213,6 @@ function Students() {
                 </li>
               ))}
             </ul>
-            <p className="mt-6 text-xs leading-relaxed text-muted-foreground">
-              Nome, disciplina, notas e dimensões são dados inventados para demonstrar a interface. Não representam uma pessoa ou avaliação real.
-            </p>
           </article>
         </div>
       </div>
@@ -244,7 +226,7 @@ function Profiles() {
       <div className="rounded-xl bg-accent p-6 md:p-10">
         <div className="rounded-lg border border-border bg-card p-6 shadow-mustard">
           <div className="flex items-center justify-between">
-            <Logo />
+            <Logo variant="simbolo" className="h-10" />
             <span className="eyebrow text-[0.6rem]">Explorar perfis</span>
           </div>
           <form className="mt-6 flex gap-2" onSubmit={(e) => e.preventDefault()}>
@@ -252,7 +234,6 @@ function Profiles() {
             <input id="busca" placeholder="Busque por disciplina ou nome" className="min-w-0 flex-1 rounded-md border border-input bg-background px-4 py-3 text-sm outline-none focus:border-primary" />
             <button aria-label="Buscar" className="rounded-md bg-primary px-4 text-primary-foreground"><Search className="h-4 w-4" /></button>
           </form>
-          <p className="mt-2 text-xs text-muted-foreground">Demonstração de busca com conteúdo ilustrativo.</p>
           <div className="mt-6 flex items-center gap-4 rounded-md border border-border p-4">
             <span className="flex h-10 w-10 items-center justify-center rounded-full bg-accent font-serif text-primary">?</span>
             <div className="flex-1">
@@ -261,7 +242,6 @@ function Profiles() {
             </div>
             <ArrowRight className="h-4 w-4 text-primary" />
           </div>
-          <p className="mt-6 text-center text-[0.6rem] font-bold tracking-widest text-muted-foreground">INTERAÇÃO DEMONSTRATIVA · DADOS FICTÍCIOS</p>
         </div>
       </div>
       <div>
@@ -298,7 +278,7 @@ function QuoteSection() {
         </div>
         <blockquote>
           <p className="font-serif text-3xl leading-snug md:text-5xl">“Uma nota é uma pergunta para aprofundar — não uma resposta definitiva sobre quem ensina.”</p>
-          <footer className="mt-6 text-sm text-primary-foreground/70">Princípio de leitura da TRILHA. Não é um depoimento de estudante.</footer>
+          <footer className="mt-6 text-sm text-primary-foreground/70">Princípio de leitura da Trilha.</footer>
         </blockquote>
       </div>
     </section>
@@ -324,8 +304,7 @@ function Schools() {
           />
         </div>
         <div className="mx-auto w-full max-w-md rounded-lg border border-border bg-card p-8 shadow-mustard md:rotate-2">
-          <p className="eyebrow text-[0.6rem]">Exemplo ilustrativo · Uso interno</p>
-          <h3 className="mt-4 text-2xl font-medium">Perguntas que ajudam a escola a escutar</h3>
+          <h3 className=" text-2xl font-medium">Perguntas que ajudam a escola a escutar</h3>
           {["O que está funcionando?", "Onde há espaço para evoluir?"].map((q, i) => (
             <div key={q} className="mt-5 flex items-center gap-4 border-t border-border pt-5">
               <span className="font-serif text-2xl text-mustard">0{i + 1}</span>
@@ -335,7 +314,6 @@ function Schools() {
           <div className="mt-8 flex h-24 items-end gap-3 border-b border-border">
             {[40, 65, 50, 85, 70, 95].map((h, i) => <div key={i} className="flex-1 rounded-t-sm bg-sage" style={{ height: `${h}%` }} />)}
           </div>
-          <p className="mt-4 text-[0.6rem] font-bold tracking-widest text-muted-foreground">ELEMENTOS VISUAIS SEM DADOS REAIS</p>
         </div>
       </div>
     </section>
@@ -378,7 +356,7 @@ const faqs = [
   ["Uma nota define se um professor é bom?", "Não. Uma nota é apenas um recorte de algumas experiências. Ela serve como ponto de partida para entender o que acontece em aula, nunca como um julgamento completo sobre quem ensina."],
   ["Para que servem as avaliações dos estudantes?", "Para trazer a perspectiva de quem aprende para perto das conversas pedagógicas, ajudando escolas e docentes a perceber o que funciona e onde há espaço para evoluir."],
   ["O que encontro em um perfil docente?", "Informações sobre disciplina e etapa de ensino, uma leitura agregada das avaliações e dimensões específicas da experiência, sempre acompanhadas de lembretes sobre contexto."],
-  ["Como a TRILHA trata as avaliações?", "Como sinais para iniciar conversas. Elas são lidas em conjunto, com atenção ao contexto, e sem linguagem de ranking ou exposição."],
+  ["Como a Trilha trata as avaliações?", "Como sinais para iniciar conversas. Elas são lidas em conjunto, com atenção ao contexto, e sem linguagem de ranking ou exposição."],
 ];
 
 function FAQ() {
@@ -429,8 +407,7 @@ function Footer() {
   return (
     <footer className="bg-forest py-12 text-primary-foreground">
       <div className={`${wrap} flex flex-col gap-6 md:flex-row md:items-center md:justify-between`}>
-        <Logo light />
-        <p className="max-w-md text-sm text-primary-foreground/70">TRILHA é um nome de trabalho. Esta proposta não implica disponibilidade de marca ou domínio.</p>
+        <span className="inline-flex w-fit rounded-md bg-background px-4 py-3"><Logo variant="texto" className="h-8" /></span>
         <p className="font-serif italic text-accent">Escuta respeitosa. Aprendizagem em movimento.</p>
       </div>
     </footer>
