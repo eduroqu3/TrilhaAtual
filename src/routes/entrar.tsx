@@ -1,9 +1,29 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate, redirect } from "@tanstack/react-router";
 import { useState, type FormEvent } from "react";
 import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 import { Logo } from "@/components/Logo";
+import { api, ApiError } from "@/lib/api";
+import { getSession, ROLE_PANELS, sanitizeRedirect } from "@/lib/auth";
+import type { Usuario } from "@/types/api";
+
+interface EntrarSearchParams {
+  redirect?: string;
+}
 
 export const Route = createFileRoute("/entrar")({
+  validateSearch: (search: Record<string, unknown>): EntrarSearchParams => {
+    return {
+      redirect: typeof search.redirect === "string" ? search.redirect : undefined,
+    };
+  },
+  beforeLoad: async () => {
+    // Se o usuário já estiver logado e abrir /entrar, redireciona direto para o painel do papel dele
+    const user = await getSession();
+    if (user) {
+      const panel = ROLE_PANELS[user.role] || "/";
+      throw redirect({ to: panel });
+    }
+  },
   head: () => ({
     meta: [
       { title: "Entrar — Trilha" },
@@ -27,25 +47,41 @@ export const Route = createFileRoute("/entrar")({
 type Mode = "entrar" | "criar" | "recuperar" | "pronto";
 
 const input =
-  "w-full rounded-md border border-input bg-background px-4 py-3 text-sm outline-none focus:border-primary";
+  "w-full rounded-md border border-input bg-background px-4 py-3 text-sm outline-none focus:border-primary disabled:opacity-50 disabled:cursor-not-allowed";
 
 function Field({
   id,
   label,
   type = "text",
   placeholder,
+  value,
+  onChange,
+  disabled,
 }: {
   id: string;
   label: string;
   type?: string;
   placeholder?: string;
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  disabled?: boolean;
 }) {
   return (
     <div>
       <label htmlFor={id} className="mb-1.5 block text-sm font-medium text-foreground">
         {label}
       </label>
-      <input id={id} name={id} type={type} required placeholder={placeholder} className={input} />
+      <input
+        id={id}
+        name={id}
+        type={type}
+        required
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+        disabled={disabled}
+        className={input}
+      />
     </div>
   );
 }
@@ -53,7 +89,47 @@ function Field({
 function Entrar() {
   const [mode, setMode] = useState<Mode>("entrar");
   const [doneMsg, setDoneMsg] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
   const navigate = useNavigate();
+  const search = Route.useSearch();
+
+  const handleLoginSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    setErrorMessage(null);
+    setLoading(true);
+
+    try {
+      // 1. Enviar credenciais para POST /api/auth/login/
+      await api.post("/api/auth/login/", {
+        username,
+        password,
+      });
+
+      // 2. Obter dados do usuário em GET /api/auth/me/
+      const user = await api.get<Usuario>("/api/auth/me/");
+
+      // 3. Redirecionamento por papel ou destino preservado
+      const safeRedirect = sanitizeRedirect(search.redirect);
+      if (safeRedirect) {
+        navigate({ to: safeRedirect });
+      } else {
+        const panel = ROLE_PANELS[user.role] || "/";
+        navigate({ to: panel });
+      }
+    } catch (err) {
+      if (err instanceof ApiError && (err.status === 401 || err.status === 400)) {
+        setErrorMessage("Não foi possível entrar. Verifique seu usuário e senha e tente novamente.");
+      } else {
+        setErrorMessage("Ocorreu um erro ao conectar ao serviço. Tente novamente em instantes.");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const submit = (e: FormEvent, msg: string) => {
     e.preventDefault();
@@ -69,7 +145,7 @@ function Entrar() {
   };
 
   const btn =
-    "group inline-flex w-full items-center justify-center gap-2 rounded-md bg-primary px-5 py-3 text-sm font-bold text-primary-foreground transition-colors hover:bg-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mustard";
+    "group inline-flex w-full items-center justify-center gap-2 rounded-md bg-primary px-5 py-3 text-sm font-bold text-primary-foreground transition-colors hover:bg-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mustard disabled:opacity-50 disabled:cursor-not-allowed";
   const linkBtn = "font-bold text-primary underline-offset-4 hover:underline";
 
   return (
@@ -117,27 +193,52 @@ function Entrar() {
           <p className="mt-3 text-muted-foreground">{titles[mode][1]}</p>
 
           {mode === "entrar" && (
-            <form
-              className="mt-8 space-y-5"
-              onSubmit={(e) => {
-                e.preventDefault();
-                navigate({ to: "/" });
-              }}
-            >
-              <Field id="email" label="E-mail" type="email" placeholder="voce@escola.com" />
-              <Field id="senha" label="Senha" type="password" placeholder="••••••••" />
+            <form className="mt-8 space-y-5" onSubmit={handleLoginSubmit}>
+              {errorMessage && (
+                <div className="rounded-md border border-destructive/20 bg-destructive/10 p-4 text-sm text-destructive" role="alert">
+                  {errorMessage}
+                </div>
+              )}
+              <Field
+                id="username"
+                label="Usuário ou E-mail"
+                type="text"
+                placeholder="seu.usuario"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                disabled={loading}
+              />
+              <Field
+                id="senha"
+                label="Senha"
+                type="password"
+                placeholder="••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                disabled={loading}
+              />
               <div className="text-right text-sm">
-                <button type="button" className={linkBtn} onClick={() => setMode("recuperar")}>
+                <button
+                  type="button"
+                  className={linkBtn}
+                  onClick={() => setMode("recuperar")}
+                  disabled={loading}
+                >
                   Esqueci minha senha
                 </button>
               </div>
-              <button type="submit" className={btn}>
-                Entrar{" "}
+              <button type="submit" className={btn} disabled={loading}>
+                {loading ? "Entrando..." : "Entrar"}{" "}
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </button>
               <p className="text-center text-sm text-muted-foreground">
                 Ainda não tem conta?{" "}
-                <button type="button" className={linkBtn} onClick={() => setMode("criar")}>
+                <button
+                  type="button"
+                  className={linkBtn}
+                  onClick={() => setMode("criar")}
+                  disabled={loading}
+                >
                   Criar conta
                 </button>
               </p>
@@ -198,6 +299,7 @@ function Entrar() {
               <span className="flex h-12 w-12 items-center justify-center rounded-full bg-accent">
                 <Check className="h-5 w-5 text-primary" />
               </span>
+              <p className="mt-4 font-serif text-xl">{doneMsg}</p>
               <button type="button" className={`${btn} mt-6`} onClick={() => setMode("entrar")}>
                 Ir para entrar{" "}
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />

@@ -10,11 +10,25 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AlunoRouteImport } from './routes/aluno'
+import { Route as CoordenacaoRouteImport } from './routes/coordenacao'
 import { Route as EntrarRouteImport } from './routes/entrar'
+import { Route as ProfessorRouteImport } from './routes/professor'
+import { Route as AlunoAvaliarVinculoIdRouteImport } from './routes/aluno.avaliar.$vinculoId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AlunoRoute = AlunoRouteImport.update({
+  id: '/aluno',
+  path: '/aluno',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CoordenacaoRoute = CoordenacaoRouteImport.update({
+  id: '/coordenacao',
+  path: '/coordenacao',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EntrarRoute = EntrarRouteImport.update({
@@ -22,31 +36,75 @@ const EntrarRoute = EntrarRouteImport.update({
   path: '/entrar',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProfessorRoute = ProfessorRouteImport.update({
+  id: '/professor',
+  path: '/professor',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AlunoAvaliarVinculoIdRoute = AlunoAvaliarVinculoIdRouteImport.update({
+  id: '/avaliar/$vinculoId',
+  path: '/avaliar/$vinculoId',
+  getParentRoute: () => AlunoRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/aluno': typeof AlunoRouteWithChildren
+  '/coordenacao': typeof CoordenacaoRoute
   '/entrar': typeof EntrarRoute
+  '/professor': typeof ProfessorRoute
+  '/aluno/avaliar/$vinculoId': typeof AlunoAvaliarVinculoIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/aluno': typeof AlunoRouteWithChildren
+  '/coordenacao': typeof CoordenacaoRoute
   '/entrar': typeof EntrarRoute
+  '/professor': typeof ProfessorRoute
+  '/aluno/avaliar/$vinculoId': typeof AlunoAvaliarVinculoIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/aluno': typeof AlunoRouteWithChildren
+  '/coordenacao': typeof CoordenacaoRoute
   '/entrar': typeof EntrarRoute
+  '/professor': typeof ProfessorRoute
+  '/aluno/avaliar/$vinculoId': typeof AlunoAvaliarVinculoIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/entrar'
+  fullPaths:
+    | '/'
+    | '/aluno'
+    | '/coordenacao'
+    | '/entrar'
+    | '/professor'
+    | '/aluno/avaliar/$vinculoId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/entrar'
-  id: '__root__' | '/' | '/entrar'
+  to:
+    | '/'
+    | '/aluno'
+    | '/coordenacao'
+    | '/entrar'
+    | '/professor'
+    | '/aluno/avaliar/$vinculoId'
+  id:
+    | '__root__'
+    | '/'
+    | '/aluno'
+    | '/coordenacao'
+    | '/entrar'
+    | '/professor'
+    | '/aluno/avaliar/$vinculoId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AlunoRoute: typeof AlunoRouteWithChildren
+  CoordenacaoRoute: typeof CoordenacaoRoute
   EntrarRoute: typeof EntrarRoute
+  ProfessorRoute: typeof ProfessorRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -58,6 +116,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/aluno': {
+      id: '/aluno'
+      path: '/aluno'
+      fullPath: '/aluno'
+      preLoaderRoute: typeof AlunoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/coordenacao': {
+      id: '/coordenacao'
+      path: '/coordenacao'
+      fullPath: '/coordenacao'
+      preLoaderRoute: typeof CoordenacaoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/entrar': {
       id: '/entrar'
       path: '/entrar'
@@ -65,12 +137,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EntrarRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/professor': {
+      id: '/professor'
+      path: '/professor'
+      fullPath: '/professor'
+      preLoaderRoute: typeof ProfessorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/aluno/avaliar/$vinculoId': {
+      id: '/aluno/avaliar/$vinculoId'
+      path: '/avaliar/$vinculoId'
+      fullPath: '/aluno/avaliar/$vinculoId'
+      preLoaderRoute: typeof AlunoAvaliarVinculoIdRouteImport
+      parentRoute: typeof AlunoRoute
+    }
   }
 }
 
+interface AlunoRouteChildren {
+  AlunoAvaliarVinculoIdRoute: typeof AlunoAvaliarVinculoIdRoute
+}
+
+const AlunoRouteChildren: AlunoRouteChildren = {
+  AlunoAvaliarVinculoIdRoute: AlunoAvaliarVinculoIdRoute,
+}
+
+const AlunoRouteWithChildren = AlunoRoute._addFileChildren(AlunoRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AlunoRoute: AlunoRouteWithChildren,
+  CoordenacaoRoute: CoordenacaoRoute,
   EntrarRoute: EntrarRoute,
+  ProfessorRoute: ProfessorRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
